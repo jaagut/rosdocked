@@ -13,6 +13,8 @@ RUN apt-get -y update \
   && apt-get install -y apt-utils \
   && apt-get install -y \
     build-essential \
+    espeak \
+    ffmpeg \
     gdb \
     gnupg2 \
     htop \
