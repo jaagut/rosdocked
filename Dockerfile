@@ -13,8 +13,6 @@ RUN apt-get -y update \
   && apt-get install -y apt-utils \
   && apt-get install -y \
     build-essential \
-    espeak \
-    ffmpeg \
     gdb \
     gnupg2 \
     htop \
@@ -24,10 +22,6 @@ RUN apt-get -y update \
     less \
     libncurses5-dev \
     locales \
-    python3-numpy \
-    python3-opencv \
-    python3-pip \
-    python3-yaml \
     ranger \
     screen \
     ssh \
@@ -69,59 +63,59 @@ RUN echo 'Package: *' >> /etc/apt/preferences.d/package-bit-bots.pref \
 
 # Additional custom dependencies
 RUN apt-get install -y \
-  ros-rolling-ament-cmake-nose \
-  ros-rolling-backward-ros \
-  ros-rolling-behaviortree-cpp-v3 \
-  ros-rolling-bondcpp \
-  ros-rolling-camera-info-manager \
-  ros-rolling-control-msgs \
-  ros-rolling-control-toolbox \
-  ros-rolling-controller-interface \
-  ros-rolling-controller-manager \
-  ros-rolling-desktop \
-  ros-rolling-diagnostic-aggregator \
-  ros-rolling-diagnostic-updater \
-  ros-rolling-effort-controllers \
-  ros-rolling-gazebo-msgs \
-  ros-rolling-image-proc \
-  ros-rolling-joint-state-broadcaster \
-  ros-rolling-joint-state-publisher-gui \
-  ros-rolling-joint-trajectory-controller \
-  ros-rolling-joy \
-  ros-rolling-joy-linux \
-  ros-rolling-moveit-core \
-  ros-rolling-moveit-planners-ompl \
-  ros-rolling-moveit-ros \
-  ros-rolling-moveit-ros-move-group \
-  ros-rolling-moveit-ros-planning \
-  ros-rolling-moveit-ros-planning-interface \
-  ros-rolling-moveit-ros-robot-interaction \
-  ros-rolling-moveit-simple-controller-manager \
-  ros-rolling-nav2-bringup \
-  ros-rolling-plotjuggler-ros \
-  ros-rolling-position-controllers \
-  ros-rolling-robot-localization \
-  ros-rolling-rot-conv \
-  ros-rolling-soccer-vision-2d-msgs \
-  ros-rolling-soccer-vision-3d-msgs \
-  ros-rolling-soccer-vision-3d-rviz-markers \
-  ros-rolling-test-msgs \
-  ros-rolling-tf-transformations \
-  ros-rolling-transmission-interface \
-  ros-rolling-velocity-controllers \
-  ros-rolling-vision-msgs \
-  ros-rolling-xacro \
+  espeak \
+  ffmpeg \
+  libespeak-dev \
   libfmt-dev \
   librange-v3-dev \
   librostest-dev \
   libtf-conversions-dev \
   liburdfdom-dev \
   libyaml-cpp-dev \
+  llvm \
+  protobuf-compiler \
   python3-colcon-common-extensions \
+  python3-colcon-ed \
+  python3-construct \
+  python3-pip \
+  python3-protobuf \
   python3-pybind11 \
   python3-rosdep \
-  python3-protobuf \
-  protobuf-compiler \
+  radeontop \
+  ros-rolling-ament-cmake-nose \
+  ros-rolling-camera-calibration \
+  ros-rolling-camera-info-manager \
+  ros-rolling-controller-manager \
+  ros-rolling-desktop \
+  ros-rolling-diagnostic-aggregator \
+  ros-rolling-effort-controllers \
+  ros-rolling-gazebo-msgs \
+  ros-rolling-image-proc \
+  ros-rolling-joint-state-broadcaster \
+  ros-rolling-joint-state-publisher-gui \
+  ros-rolling-joint-trajectory-controller \
+  ros-rolling-joy-linux \
+  ros-rolling-moveit-planners-ompl \
+  ros-rolling-moveit-ros \
+  ros-rolling-moveit-simple-controller-manager \
+  ros-rolling-nav2-bringup \
+  # ros-rolling-plotjuggler-ros containing plotjuggler ros plugins
+  # build currently fails and is not available as a package so we
+  # have to manually install plotjuggler and plotjuggler-msgs
+  # https://github.com/PlotJuggler/plotjuggler-ros-plugins/issues/59
+  ros-rolling-plotjuggler \
+  ros-rolling-plotjuggler-msgs \
+  ros-rolling-position-controllers \
+  ros-rolling-rmw-cyclonedds-cpp \
+  ros-rolling-robot-localization \
+  ros-rolling-rot-conv \
+  ros-rolling-rqt-robot-monitor \
+  ros-rolling-soccer-vision-2d-msgs \
+  ros-rolling-soccer-vision-3d-rviz-markers \
+  ros-rolling-test-msgs \
+  ros-rolling-tf-transformations \
+  ros-rolling-transmission-interface \
+  ros-rolling-velocity-controllers \
   && pip3 install pip -U \
   && python3 -m pip install git+https://github.com/ruffsl/colcon-clean
 
