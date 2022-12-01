@@ -9,16 +9,18 @@ ARG shell
 
 # Basic Utilities
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update \
+RUN apt-get update -y \
   && apt-get install -y apt-utils \
   && apt-get install -y \
     build-essential \
+    curl \
     gdb \
     gnupg2 \
     htop \
     iproute2 \
     iputils-ping \
     ipython3 \
+    jq \
     less \
     libncurses5-dev \
     locales \
@@ -47,18 +49,15 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# Setup packages.bit-bots.de repository
+# Setup and prioritize packages.bit-bots.de repository
 RUN mkdir -p /usr/local/share/keyrings \
   && wget https://packages.bit-bots.de/key.asc -O /usr/local/share/keyrings/bitbots.key \
   && echo 'deb [signed-by=/usr/local/share/keyrings/bitbots.key arch=amd64] https://packages.bit-bots.de jammy main' > /etc/apt/sources.list.d/bitbots.list \
-  && apt update \
-  && apt upgrade -y --allow-downgrades
-
-# Prioritize packages.bit-bots.de
-RUN echo 'Package: *' >> /etc/apt/preferences.d/package-bit-bots.pref \
+  && echo 'Package: *' >> /etc/apt/preferences.d/package-bit-bots.pref \
   && echo 'Pin: origin "packages.bit-bots.de"' >> /etc/apt/preferences.d/package-bit-bots.pref \
   && echo 'Pin-Priority: 1000' >> /etc/apt/preferences.d/package-bit-bots.pref \
-  && apt update \
+  && echo 'APT::Get::Always-Include-Phased-Updates "true";' > /etc/apt/apt.conf.d/99-disable-phased-updates \
+  && apt update -y \
   && apt upgrade -y --allow-downgrades
 
 # Additional custom dependencies
@@ -123,8 +122,7 @@ RUN apt-get install -y \
 VOLUME "${home}"
 
 # Clone user into docker image and set up X11 sharing
-RUN \
-  echo "${user}:x:${uid}:${uid}:${user},,,:${home}:${shell}" >> /etc/passwd \
+RUN echo "${user}:x:${uid}:${uid}:${user},,,:${home}:${shell}" >> /etc/passwd \
   && echo "${user}:*::0:99999:0:::" >> /etc/shadow \
   && echo "${user}:x:${uid}:" >> /etc/group \
   && echo "${user} ALL=(ALL) NOPASSWD: ALL" >> "/etc/sudoers"
