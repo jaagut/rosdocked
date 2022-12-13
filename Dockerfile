@@ -56,14 +56,14 @@ RUN mkdir -p /usr/local/share/keyrings \
   && wget https://packages.bit-bots.de/key.asc -O /usr/local/share/keyrings/bitbots.key \
   && echo 'deb [signed-by=/usr/local/share/keyrings/bitbots.key arch=amd64] https://packages.bit-bots.de jammy main' > /etc/apt/sources.list.d/bitbots.list \
   && apt update \
-  && apt upgrade -y
+  && apt upgrade -y --allow-downgrades
 
 # Prioritize packages.bit-bots.de
 RUN echo 'Package: *' >> /etc/apt/preferences.d/package-bit-bots.pref \
   && echo 'Pin: origin "packages.bit-bots.de"' >> /etc/apt/preferences.d/package-bit-bots.pref \
   && echo 'Pin-Priority: 1000' >> /etc/apt/preferences.d/package-bit-bots.pref \
   && apt update \
-  && apt upgrade -y
+  && apt upgrade -y --allow-downgrades
 
 # Additional custom dependencies
 RUN apt-get install -y \
