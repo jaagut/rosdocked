@@ -10,7 +10,7 @@ ARG shell
 # Basic Utilities
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
-  && apt-get install -y apt-utils \
+  && apt-get install -y apt-utils auto-apt-proxy \
   && apt-get install -y \
     build-essential \
     curl \
