@@ -2,7 +2,7 @@
 set -eEou pipefail
 
 IMAGE_NAME=ros-rolling
-DIRNAME=`dirname $0`
+WORKSPACE=${ROS_WORKSPACE:-$HOME}
 
 # Build the docker image
 docker build \
@@ -11,7 +11,8 @@ docker build \
   --build-arg user=$USER \
   --build-arg uid=$UID \
   --build-arg home=$HOME \
-  --build-arg workspace=$HOME \
+  --build-arg workspace=$WORKSPACE \
   --build-arg shell=$SHELL \
-  -t $IMAGE_NAME $DIRNAME \
-  $@
+  -t $IMAGE_NAME \
+  $@ \
+  - < Dockerfile
