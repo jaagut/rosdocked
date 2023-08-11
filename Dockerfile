@@ -1,4 +1,4 @@
-FROM ros:rolling
+FROM ros:iron
 
 # Arguments
 ARG user
@@ -50,13 +50,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Setup and prioritize packages.bit-bots.de repository
-RUN mkdir -p /usr/local/share/keyrings \
-  && wget https://packages.bit-bots.de/key.asc -O /usr/local/share/keyrings/bitbots.key \
-  && echo 'deb [signed-by=/usr/local/share/keyrings/bitbots.key arch=amd64] https://packages.bit-bots.de jammy main' > /etc/apt/sources.list.d/bitbots.list \
-  && echo 'Package: *' >> /etc/apt/preferences.d/package-bit-bots.pref \
-  && echo 'Pin: origin "packages.bit-bots.de"' >> /etc/apt/preferences.d/package-bit-bots.pref \
-  && echo 'Pin-Priority: 1000' >> /etc/apt/preferences.d/package-bit-bots.pref \
-  && echo 'APT::Get::Always-Include-Phased-Updates "true";' > /etc/apt/apt.conf.d/99-disable-phased-updates \
+RUN echo 'APT::Get::Always-Include-Phased-Updates "true";' > /etc/apt/apt.conf.d/99-disable-phased-updates \
   && apt update -y \
   && apt upgrade -y --allow-downgrades
 
@@ -81,40 +75,6 @@ RUN apt-get install -y \
   python3-pybind11 \
   python3-rosdep \
   radeontop \
-  ros-rolling-ament-cmake-nose \
-  ros-rolling-camera-calibration \
-  ros-rolling-camera-info-manager \
-  ros-rolling-controller-manager \
-  ros-rolling-desktop \
-  ros-rolling-diagnostic-aggregator \
-  ros-rolling-effort-controllers \
-  ros-rolling-gazebo-msgs \
-  ros-rolling-image-proc \
-  ros-rolling-joint-state-broadcaster \
-  ros-rolling-joint-state-publisher-gui \
-  ros-rolling-joint-trajectory-controller \
-  ros-rolling-joy-linux \
-  ros-rolling-moveit-planners-ompl \
-  ros-rolling-moveit-ros \
-  ros-rolling-moveit-simple-controller-manager \
-  ros-rolling-nav2-bringup \
-  # ros-rolling-plotjuggler-ros containing plotjuggler ros plugins
-  # build currently fails and is not available as a package so we
-  # have to manually install plotjuggler and plotjuggler-msgs
-  # https://github.com/PlotJuggler/plotjuggler-ros-plugins/issues/59
-  ros-rolling-plotjuggler \
-  ros-rolling-plotjuggler-msgs \
-  ros-rolling-position-controllers \
-  ros-rolling-rmw-cyclonedds-cpp \
-  ros-rolling-robot-localization \
-  ros-rolling-rot-conv \
-  ros-rolling-rqt-robot-monitor \
-  ros-rolling-soccer-vision-2d-msgs \
-  ros-rolling-soccer-vision-3d-rviz-markers \
-  ros-rolling-test-msgs \
-  ros-rolling-tf-transformations \
-  ros-rolling-transmission-interface \
-  ros-rolling-velocity-controllers \
   && pip3 install pip -U \
   && python3 -m pip install git+https://github.com/ruffsl/colcon-clean
 
