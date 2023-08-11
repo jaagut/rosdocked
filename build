@@ -13,6 +13,7 @@ docker build \
   --build-arg home=$HOME \
   --build-arg workspace=$WORKSPACE \
   --build-arg shell=$SHELL \
+  --no-cache \
   -t $IMAGE_NAME \
   $@ \
   - < Dockerfile
