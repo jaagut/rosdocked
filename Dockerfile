@@ -25,6 +25,7 @@ RUN apt-get update -y \
     libncurses5-dev \
     locales \
     ranger \
+    rsync \
     screen \
     ssh \
     sudo \
